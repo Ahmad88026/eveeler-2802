@@ -1,4 +1,7 @@
 ---
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog');
 ---
 
 <html lang="en">
@@ -9,54 +12,91 @@
     <title>EV Pakistan Blog</title>
 
     <style>
-      body{
-        margin:0;
-        font-family:Arial,sans-serif;
-        background:#f5fff7;
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f5fff7;
       }
 
-      header{
-        padding:20px 40px;
-        background:white;
-        border-bottom:1px solid #ddd;
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 50px;
+        background: white;
+        border-bottom: 1px solid #ddd;
       }
 
-      .hero{
-        padding:80px 40px;
+      nav {
+        display: flex;
+        gap: 20px;
       }
 
-      .hero h1{
-        font-size:56px;
-        max-width:900px;
+      nav a {
+        text-decoration: none;
+        color: black;
+        font-weight: bold;
       }
 
-      .grid{
-        display:grid;
-        grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-        gap:24px;
-        padding:40px;
+      .hero {
+        padding: 80px 50px;
       }
 
-      .card{
-        background:white;
-        border-radius:16px;
-        overflow:hidden;
-        box-shadow:0 2px 10px rgba(0,0,0,0.08);
+      .hero h1 {
+        font-size: 60px;
+        max-width: 900px;
       }
 
-      .image{
-        height:180px;
-        background:linear-gradient(135deg,#16a34a,#059669);
+      .hero p {
+        max-width: 700px;
+        font-size: 20px;
+        line-height: 1.7;
       }
 
-      .content{
-        padding:20px;
+      .btn {
+        display: inline-block;
+        margin-top: 20px;
+        background: #0f9d58;
+        color: white;
+        padding: 16px 30px;
+        text-decoration: none;
+        border-radius: 10px;
       }
 
-      a{
-        text-decoration:none;
-        color:#0f9d58;
-        font-weight:bold;
+      .blogs {
+        padding: 40px 50px 100px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+      }
+
+      .card {
+        background: white;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      }
+
+      .card-image {
+        height: 180px;
+        background: linear-gradient(135deg,#16a34a,#059669);
+      }
+
+      .card-content {
+        padding: 24px;
+      }
+
+      .card h2 {
+        margin-top: 0;
+      }
+
+      .read {
+        color: #0f9d58;
+        font-weight: bold;
+        text-decoration: none;
       }
     </style>
   </head>
@@ -64,43 +104,62 @@
   <body>
 
     <header>
-      <h2 style="color:#0f9d58;">
-        EV Pakistan Blog
-      </h2>
+      <h2 style="color:#0f9d58;">EV Pakistan Blog</h2>
+
+      <nav>
+        <a href="#">EV News</a>
+        <a href="#">Reviews</a>
+        <a href="#">Charging</a>
+        <a href="#">Technology</a>
+        <a href="#">Global EV</a>
+      </nav>
     </header>
 
     <section class="hero">
-
       <h1>
-        Electric Vehicle News & EV Updates in Pakistan
+        Electric Vehicle News, Reviews & EV Industry Updates in Pakistan
       </h1>
 
       <p>
-        Latest electric cars, EV bikes, charging stations
-        and EV technology news.
+        Stay updated with electric cars, EV bikes, charging stations,
+        infrastructure and global EV developments.
       </p>
 
+      <a href="#blogs" class="btn">
+        Read Our Latest Blogs
+      </a>
     </section>
 
-    <section class="grid">
+    <section class="blogs" id="blogs">
 
-      <div class="card">
+      <h2>Latest EV Blogs</h2>
 
-        <div class="image"></div>
+      <div class="grid">
 
-        <div class="content">
+        {
+          posts.map((post) => (
+            <div class="card">
 
-          <h2>EV Charging in Pakistan</h2>
+              <div class="card-image"></div>
 
-          <p>
-            Latest EV charging infrastructure developments.
-          </p>
+              <div class="card-content">
 
-          <a href="/blog/ev-charging">
-            Read Blog →
-          </a>
+                <h2>{post.data.title}</h2>
 
-        </div>
+                <p>{post.data.description}</p>
+
+                <a
+                  class="read"
+                  href={`/blog/${post.slug}`}
+                >
+                  Read Blog →
+                </a>
+
+              </div>
+
+            </div>
+          ))
+        }
 
       </div>
 
