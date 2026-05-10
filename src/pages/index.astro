@@ -1,115 +1,7 @@
 ---
-const categories = [
-  {
-    title: "EV News Pakistan",
-    blogs: [
-      {
-        title: "Electric Cars in Pakistan",
-        desc: "Latest EV adoption trends and industry developments.",
-      },
-      {
-        title: "Government EV Policies",
-        desc: "Understanding incentives and EV regulations.",
-      },
-      {
-        title: "Top EV Startups",
-        desc: "Emerging electric mobility companies in Pakistan.",
-      },
-      {
-        title: "Charging Expansion",
-        desc: "New EV charging stations across major cities.",
-      },
-    ],
-  },
+import { getCollection } from 'astro:content';
 
-  {
-    title: "EV Reviews",
-    blogs: [
-      {
-        title: "Best Electric Bikes",
-        desc: "Affordable electric bikes for Pakistani roads.",
-      },
-      {
-        title: "Electric Cars vs Petrol",
-        desc: "Cost comparison and long-term savings.",
-      },
-      {
-        title: "Hybrid vs EV",
-        desc: "Which option makes more sense in Pakistan?",
-      },
-      {
-        title: "Top Budget EV Cars",
-        desc: "Best affordable EVs available today.",
-      },
-    ],
-  },
-
-  {
-    title: "Charging & Infrastructure",
-    blogs: [
-      {
-        title: "Fast Charging Guide",
-        desc: "How fast charging works for EVs.",
-      },
-      {
-        title: "Home EV Charging",
-        desc: "Setting up charging at home.",
-      },
-      {
-        title: "Battery Technology",
-        desc: "The future of EV battery innovation.",
-      },
-      {
-        title: "EV Range Explained",
-        desc: "Factors affecting battery performance.",
-      },
-    ],
-  },
-
-  {
-    title: "EV Technology",
-    blogs: [
-      {
-        title: "Future of Autonomous EVs",
-        desc: "AI and smart driving technologies.",
-      },
-      {
-        title: "EV Software Systems",
-        desc: "How software powers modern electric cars.",
-      },
-      {
-        title: "Smart Mobility",
-        desc: "Connected transportation ecosystems.",
-      },
-      {
-        title: "Battery Recycling",
-        desc: "Sustainable EV battery disposal methods.",
-      },
-    ],
-  },
-
-  {
-    title: "Global EV News",
-    blogs: [
-      {
-        title: "China’s EV Dominance",
-        desc: "How China became the EV manufacturing leader.",
-      },
-      {
-        title: "Tesla vs BYD",
-        desc: "The global EV competition explained.",
-      },
-      {
-        title: "Europe’s EV Expansion",
-        desc: "The rapid transition toward electric mobility.",
-      },
-      {
-        title: "Affordable EV Revolution",
-        desc: "Why cheaper EVs are changing the market.",
-      },
-    ],
-  },
-];
+const posts = await getCollection('blog');
 ---
 
 <html lang="en">
@@ -119,17 +11,11 @@ const categories = [
 
     <title>EV Pakistan Blog</title>
 
-    <meta
-      name="description"
-      content="Latest EV news, electric cars, charging stations and EV technology updates in Pakistan."
-    />
-
     <style>
       body {
         margin: 0;
         font-family: Arial, sans-serif;
         background: #f5fff7;
-        color: #111;
       }
 
       header {
@@ -148,17 +34,16 @@ const categories = [
 
       nav a {
         text-decoration: none;
-        color: #222;
+        color: black;
         font-weight: bold;
       }
 
       .hero {
-        padding: 90px 50px;
+        padding: 80px 50px;
       }
 
       .hero h1 {
         font-size: 60px;
-        line-height: 1.1;
         max-width: 900px;
       }
 
@@ -169,28 +54,22 @@ const categories = [
       }
 
       .btn {
-        margin-top: 30px;
         display: inline-block;
-        padding: 16px 30px;
+        margin-top: 20px;
         background: #0f9d58;
         color: white;
+        padding: 16px 30px;
         text-decoration: none;
-        border-radius: 12px;
-        font-weight: bold;
+        border-radius: 10px;
       }
 
-      .section {
-        padding: 20px 50px 80px;
-      }
-
-      .section h2 {
-        margin-bottom: 30px;
-        font-size: 36px;
+      .blogs {
+        padding: 40px 50px 100px;
       }
 
       .grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: 25px;
       }
 
@@ -203,20 +82,18 @@ const categories = [
 
       .card-image {
         height: 180px;
-        background: linear-gradient(135deg, #16a34a, #059669);
+        background: linear-gradient(135deg,#16a34a,#059669);
       }
 
       .card-content {
         padding: 24px;
       }
 
-      .card h3 {
+      .card h2 {
         margin-top: 0;
       }
 
-      .read-btn {
-        display: inline-block;
-        margin-top: 14px;
+      .read {
         color: #0f9d58;
         font-weight: bold;
         text-decoration: none;
@@ -245,7 +122,7 @@ const categories = [
 
       <p>
         Stay updated with electric cars, EV bikes, charging stations,
-        infrastructure, EV technology and global electric mobility trends.
+        infrastructure and global EV developments.
       </p>
 
       <a href="#blogs" class="btn">
@@ -253,39 +130,40 @@ const categories = [
       </a>
     </section>
 
-    <div id="blogs">
-      {
-        categories.map((category) => (
-          <section class="section">
+    <section class="blogs" id="blogs">
 
-            <h2>{category.title}</h2>
+      <h2>Latest EV Blogs</h2>
 
-            <div class="grid">
-              {
-                category.blogs.map((blog) => (
-                  <div class="card">
+      <div class="grid">
 
-                    <div class="card-image"></div>
+        {
+          posts.map((post) => (
+            <div class="card">
 
-                    <div class="card-content">
-                      <h3>{blog.title}</h3>
+              <div class="card-image"></div>
 
-                      <p>{blog.desc}</p>
+              <div class="card-content">
 
-                      <a href="#" class="read-btn">
-                        Read Blog →
-                      </a>
-                    </div>
+                <h2>{post.data.title}</h2>
 
-                  </div>
-                ))
-              }
+                <p>{post.data.description}</p>
+
+                <a
+                  class="read"
+                  href={`/blog/${post.slug}`}
+                >
+                  Read Blog →
+                </a>
+
+              </div>
+
             </div>
+          ))
+        }
 
-          </section>
-        ))
-      }
-    </div>
+      </div>
+
+    </section>
 
   </body>
 </html>
