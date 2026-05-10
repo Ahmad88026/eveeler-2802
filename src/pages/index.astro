@@ -1,4 +1,7 @@
 ---
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog');
 ---
 
 <html lang="en">
@@ -9,54 +12,53 @@
     <title>EV Pakistan Blog</title>
 
     <style>
-      body{
-        margin:0;
-        font-family:Arial,sans-serif;
-        background:#f5fff7;
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f5fff7;
       }
 
-      header{
-        padding:20px 40px;
-        background:white;
-        border-bottom:1px solid #ddd;
+      header {
+        padding: 20px 40px;
+        background: white;
+        border-bottom: 1px solid #ddd;
       }
 
-      .hero{
-        padding:80px 40px;
+      h1 {
+        font-size: 52px;
       }
 
-      .hero h1{
-        font-size:56px;
-        max-width:900px;
+      .hero {
+        padding: 70px 40px;
       }
 
-      .grid{
-        display:grid;
-        grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-        gap:24px;
-        padding:40px;
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+        gap: 24px;
+        padding: 40px;
       }
 
-      .card{
-        background:white;
-        border-radius:16px;
-        overflow:hidden;
-        box-shadow:0 2px 10px rgba(0,0,0,0.08);
+      .card {
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
       }
 
-      .image{
-        height:180px;
-        background:linear-gradient(135deg,#16a34a,#059669);
+      .image {
+        height: 180px;
+        background: linear-gradient(135deg,#16a34a,#059669);
       }
 
-      .content{
-        padding:20px;
+      .content {
+        padding: 20px;
       }
 
-      a{
-        text-decoration:none;
-        color:#0f9d58;
-        font-weight:bold;
+      a {
+        color: #0f9d58;
+        text-decoration: none;
+        font-weight: bold;
       }
     </style>
   </head>
@@ -64,45 +66,45 @@
   <body>
 
     <header>
-      <h2 style="color:#0f9d58;">
-        EV Pakistan Blog
-      </h2>
+      <h2 style="color:#0f9d58;">EV Pakistan Blog</h2>
     </header>
 
     <section class="hero">
-
       <h1>
         Electric Vehicle News & EV Updates in Pakistan
       </h1>
 
       <p>
-        Latest electric cars, EV bikes, charging stations
-        and EV technology news.
+        Read the latest electric vehicle news, EV reviews,
+        charging infrastructure and technology trends.
       </p>
-
     </section>
 
     <section class="grid">
 
-      <div class="card">
+      {
+        posts.map((post) => (
 
-        <div class="image"></div>
+          <div class="card">
 
-        <div class="content">
+            <div class="image"></div>
 
-          <h2>EV Charging in Pakistan</h2>
+            <div class="content">
 
-          <p>
-            Latest EV charging infrastructure developments.
-          </p>
+              <h2>{post.data.title}</h2>
 
-          <a href="/blog/ev-charging">
-            Read Blog →
-          </a>
+              <p>{post.data.description}</p>
 
-        </div>
+              <a href={`/blog/${post.id}`}>
+                Read Blog →
+              </a>
 
-      </div>
+            </div>
+
+          </div>
+
+        ))
+      }
 
     </section>
 
